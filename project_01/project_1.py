@@ -13,7 +13,7 @@ def cost(i:str, j:str)->int:
     ''' 
     Score matrix for match/mismatch
     With translation from Nucleotide to idx
-    Takes to nucleotides as input (strings of length 1)
+    Takes two nucleotides as input (strings of length 1)
     outputs the score for the given match/mismatch as int
     '''
 
@@ -28,8 +28,6 @@ def cost(i:str, j:str)->int:
          "T":3}
     return score[t[i],t[j]]
 
-    
-#%%
 
 #%% build matrix
 
