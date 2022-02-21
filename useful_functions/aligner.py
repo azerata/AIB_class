@@ -84,6 +84,9 @@ def build_alignment(seq1:str, seq2:str, gap_score:int, score = None):
     out = c(i, j, matrix, gap_score, seq1, seq2, score)
     return  (matrix, out)
 
+
+
+
 if __name__ == '__main__':
     
     seqs = sys.stdin.readlines()
