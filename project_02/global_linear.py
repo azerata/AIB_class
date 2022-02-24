@@ -1,4 +1,3 @@
-from ctypes import alignment
 import numpy as np
 import sys
 
@@ -76,38 +75,59 @@ def build_alignment(seq1:str, seq2:str, gap_score:int):
 
 def backtrack(matrix, i,j, seq1, seq2, gap_cost, out1 = [], out2 = []):
     T = matrix
-    print(T[i,j], T[i-1,j-1] + cost(seq1[i],seq2[j]))
-    print(T[i,j], (T[i-1,j] + gap_cost))
-    print(T[i,j], (T[i,j-1] + gap_cost))
-    if (i > 0) and (j > 0) and (T[i,j] == (T[i-1,j-1] + cost(seq1[i],seq2[j]))):
-        out1.append(seq1[i])
-        out2.append(seq2[j])
-        print(i,j,"m",T[i,j])
+    if (i > 0) and (j > 0) and (T[i,j] == (T[i-1,j-1] + cost(seq1[i-1],seq2[j-1]))):
+        out1.append(seq1[i-1])
+        out2.append(seq2[j-1])
         backtrack(T, i-1, j-1, seq1, seq2, gap_cost, out1, out2)
     elif (i > 0) and (j >= 0) and (T[i,j] == (T[i-1,j] + gap_cost)):
-        out1.append(seq1[i])
+        out1.append(seq1[i-1])
         out2.append("-")
-        print(i,j,"i", T[i-1,j])
         backtrack(T, i-1, j, seq1, seq2, gap_cost, out1, out2)
     elif (i >= 0) and (j > 0) and (T[i,j] == (T[i,j-1] + gap_cost)):
         out1.append("-")
-        out2.append(seq2[j])
-        print(i,j,"d",T[i,j-1])
+        out2.append(seq2[j-1])
         backtrack(T, i, j-1, seq1, seq2, gap_cost, out1, out2)
-    return("".join(out1), "".join(out2) )
+    return("".join(out1)[::-1], "".join(out2)[::-1] )
 
 def optimal_alignment(seq1, seq2, gap_cost):
     pip = build_alignment(seq1, seq2, gap_cost)
     print(pip[0     ])
-    out = backtrack(pip[0], len(seq1)-1, len(seq2)-1, seq1, seq2, gap_cost)
+    out = backtrack(pip[0], len(seq1), len(seq2), seq1, seq2, gap_cost)
     return out
 
-sequences = fasta(sys.argv[2])
-
-cost = outer_cost()
-
-gap_cost = int(sys.argv[3])
 
 
-out = optimal_alignment(sequences["Seq1"], sequences["Seq2"], gap_cost)
-print(out[0], "\n", out[1])
+def get_sequences(file):
+    seq_dict = fasta(file)
+    keys = [key for key in seq_dict.keys()]
+    out = []
+    for key in keys:
+        out.append(seq_dict[key].upper())
+    return out
+
+def optimal_score_matrix(sequences:list, gap_cost):
+    k = len(sequences)
+    M = np.zeros((k,k))
+    for i in range(k):
+        for j in range(k):
+            S = build_alignment(sequences[i],sequences[j],gap_cost)[1]
+            M[i,j] = S
+    return M
+
+
+if __name__ == "__main__":
+
+    sequences = get_sequences(sys.argv[2])
+    k = len(sequences)
+
+    cost = outer_cost()
+
+    gap_cost = int(sys.argv[3])
+
+    if k == 2:
+        out = optimal_alignment(sequences[0], sequences[1], gap_cost)
+        print(out[0], "\n", out[1])
+    elif k > 2:
+        out = optimal_score_matrix(sequences, gap_cost)
+        print(out)
+
