@@ -1,5 +1,8 @@
 import numpy as np
 import sys
+import pandas as pd
+from timeit import default_timer as timer
+import seaborn as sns
 
 from fasta import fasta
 from cmath import inf
@@ -91,7 +94,6 @@ def backtrack(matrix, i,j, seq1, seq2, gap_cost, out1 = [], out2 = []):
 
 def optimal_alignment(seq1, seq2, gap_cost):
     pip = build_alignment(seq1, seq2, gap_cost)
-    print(pip[0     ])
     out = backtrack(pip[0], len(seq1), len(seq2), seq1, seq2, gap_cost)
     return out
 
@@ -115,6 +117,34 @@ def optimal_score_matrix(sequences:list, gap_cost):
     return M
 
 
+def construct_test_data(sequences:list, n):
+
+    out = [ [] for _ in range(n)]
+
+    for i in range(n):
+        for j in range(len(sequences)):
+            tmp = len(sequences[j]) // n
+            out[i].append(sequences[j][:(i+1)*tmp])
+
+    return out
+
+
+
+def time_alg(test_data):
+
+    ns, times = [], []
+    
+
+    for n in range( len(test_data)):
+        start = timer()
+        optimal_alignment(test_data[n][0], test_data[n][1],gap_cost )
+        end = timer()
+
+        ns.append(len(test_data[n][0]))
+        times.append(end - start)
+
+    return pd.DataFrame({'n':ns, 'time':times})
+
 if __name__ == "__main__":
 
     sequences = get_sequences(sys.argv[2])
@@ -124,10 +154,15 @@ if __name__ == "__main__":
 
     gap_cost = int(sys.argv[3])
 
-    if k == 2:
-        out = optimal_alignment(sequences[0], sequences[1], gap_cost)
-        print(out[0], "\n", out[1])
-    elif k > 2:
-        out = optimal_score_matrix(sequences, gap_cost)
-        print(out)
+    test_data = construct_test_data(sequences,20)
+
+    out = time_alg(test_data)
+    out.to_excel("test_1.xlsx")
+
+#    if k == 2:
+#        out = optimal_alignment(sequences[0], sequences[1], gap_cost)
+#        print(out[0], "\n", out[1])
+#    elif k > 2:
+#        out = optimal_score_matrix(sequences, gap_cost)
+#        print(out)
 
