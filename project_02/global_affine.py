@@ -12,9 +12,9 @@ def outer_cost():
     Outer function to create the cost function from phylib format score matrix
     Builds a score matrics using NP arrays
     And a translation matrix
-    Uses sys arg 1 as input file
+    Uses sys arg 2 as input file
     '''
-    file = open(sys.argv[1])
+    file = open(sys.argv[2])
     tmp = int(file.readline())
 
     t = {}
@@ -127,17 +127,20 @@ def get_sequences(file):
 
 if __name__ == "__main__":
 
-    cost = outer_cost()
+    run_opt = sys.argv[1]
 
-    sequences = get_sequences(sys.argv[2])
+    cost = outer_cost() #uses sys.argv[2]
 
-    gap = {"alpha":int(sys.argv[3]), "beta":int(sys.argv[4])}
+    sequences = get_sequences(sys.argv[3])
 
-    if len(sequences) == 2:
+    gap = {"alpha":int(sys.argv[4]), "beta":int(sys.argv[5])}
+
+    if run_opt in ['a', 'A']:
         print(global_affine(sequences[0], sequences[1], gap["alpha"], gap["beta"]))
-    elif len(sequences) > 2:
-        print(optimal_score_matrix(sequences, gap["alpha"], gap["beta"]))
-    else:
-        print("you done goofed.")
 
+    if run_opt in ['m', 'M']:
+        print(optimal_score_matrix(sequences, gap["alpha"], gap["beta"]))
     
+    if run_opt in ['o', 'O']:
+        out = AffineScore(sequences[0], sequences[1], gap["alpha"], gap["beta"])[0][-1,-1]
+        print(out)

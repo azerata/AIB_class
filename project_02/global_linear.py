@@ -10,8 +10,11 @@ from cmath import inf
 
 
 def outer_cost():
-
-    file = open(sys.argv[1])
+    ''' 
+    Outer function, constructs the cost function based on input Phylib like .txt file, in sys arg 2
+    Returns the cost function
+    '''
+    file = open(sys.argv[2])
     tmp = int(file.readline())
 
     t = {}
@@ -21,7 +24,8 @@ def outer_cost():
     i = 0
     for val in scores:
         tmp = [_ for _ in val.split()]
-        t[tmp[0]]=i
+        t[tmp[0].lower()]=i
+        t[tmp[0].upper()]=i
         for j in range(len(tmp[1:])):
             score[i,j] = int(tmp[j +1])
         i+=1
@@ -116,53 +120,25 @@ def optimal_score_matrix(sequences:list, gap_cost):
             M[i,j] = S
     return M
 
-
-def construct_test_data(sequences:list, n):
-
-    out = [ [] for _ in range(n)]
-
-    for i in range(n):
-        for j in range(len(sequences)):
-            tmp = len(sequences[j]) // n
-            out[i].append(sequences[j][:(i+1)*tmp])
-
-    return out
-
-
-
-def time_alg(test_data):
-
-    ns, times = [], []
-    
-
-    for n in range( len(test_data)):
-        start = timer()
-        optimal_alignment(test_data[n][0], test_data[n][1],gap_cost )
-        end = timer()
-
-        ns.append(len(test_data[n][0]))
-        times.append(end - start)
-
-    return pd.DataFrame({'n':ns, 'time':times})
-
 if __name__ == "__main__":
 
-    sequences = get_sequences(sys.argv[2])
-    k = len(sequences)
+    run_op = sys.argv[1]
 
-    cost = outer_cost()
+    cost = outer_cost()  #uses sys.argv[2]
 
-    gap_cost = int(sys.argv[3])
+    sequences = get_sequences(sys.argv[3])
 
-    test_data = construct_test_data(sequences,20)
+    gap_cost = int(sys.argv[4])
 
-    out = time_alg(test_data)
-    out.to_excel("test_1.xlsx")
+    if run_op in ["a", "A"]:
+        out = optimal_alignment(sequences[0], sequences[1], gap_cost)
+        print(out[0], "\n", out[1])
 
-#    if k == 2:
-#        out = optimal_alignment(sequences[0], sequences[1], gap_cost)
-#        print(out[0], "\n", out[1])
-#    elif k > 2:
-#        out = optimal_score_matrix(sequences, gap_cost)
-#        print(out)
+    if run_op in ["o", "O"]:
+        out = build_alignment(sequences[0], sequences[1], gap_cost)
+        print(out[1])
+
+    if run_op in ["m", "M"]:
+        out = optimal_score_matrix(sequences, gap_cost)
+        print(out)
 
