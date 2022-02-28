@@ -1,9 +1,7 @@
-from cmath import inf
-
-
 import numpy as np
 import sys
 
+from cmath import inf
 from fasta import fasta
 
 
@@ -102,7 +100,7 @@ def global_affine (seq1,seq2,a,b):
 
                 else:
                     k=k+1
-    return "".join(str1[::-1]),"".join(str2[::-1])
+    return ["".join(str1[::-1]),"".join(str2[::-1])]
 
 
 def optimal_score_matrix(sequences:list, alpha:int, beta:int):
@@ -136,7 +134,8 @@ if __name__ == "__main__":
     gap = {"alpha":int(sys.argv[4]), "beta":int(sys.argv[5])}
 
     if run_opt in ['a', 'A']:
-        print(global_affine(sequences[0], sequences[1], gap["alpha"], gap["beta"]))
+        out = global_affine(sequences[0], sequences[1], gap["alpha"], gap["beta"])
+        print(f'>seq1\n{out[0]}\n\n>seq2\n{out[1]}')
 
     if run_opt in ['m', 'M']:
         print(optimal_score_matrix(sequences, gap["alpha"], gap["beta"]))
