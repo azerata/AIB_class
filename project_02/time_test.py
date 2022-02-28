@@ -1,3 +1,4 @@
+from cgi import test
 import numpy as np
 import pandas as pd
 from timeit import default_timer as timer
@@ -22,7 +23,7 @@ def construct_test_data(sequences:list, n):
 
 def time_affine(test_data):
 
-    ns, times = [], []
+    ns, times, alg = [], [], []
     
 
     for n in range(len(test_data)):
@@ -33,25 +34,27 @@ def time_affine(test_data):
 
         ns.append(len(test_data[n][0]))
         times.append(end - start)
+        alg.append("affine")
 
-    return pd.DataFrame({'n':ns, 'time':times})
+    return pd.DataFrame({'n':ns, 'time':times,'algorithm':alg})
 
 
 def time_linear(test_data):
 
-    ns, times = [], []
+    ns, times, alg = [], [], []
     
 
     for n in range( len(test_data)):
         start = timer()
-        optimal_alignment(test_data[n][0], test_data[n][1],gap_cost )
+        optimal_alignment(test_data[n][0], test_data[n][1],gap_cost["alpha"] )
         end = timer()
 
         print(f"Completed run: {n+1}/{len(test_data)}, at seq lengths {len(test_data[n][0])} & {len(test_data[n][1])}.")
         ns.append(len(test_data[n][0]))
         times.append(end - start)
+        alg.append("linear")
 
-    return pd.DataFrame({'n':ns, 'time':times})
+    return pd.DataFrame({'n':ns, 'time':times, 'algorithm':alg})
 
 
 def outer_cost():
@@ -269,11 +272,15 @@ gap_cost = {"alpha":int(sys.argv[3]), "beta":int(sys.argv[4])}
 
 test_data = construct_test_data(sequences, 20)
 
-time_measures = time_alg(test_data)
+t1 = time_affine(test_data)
+t2 = time_linear(test_data)
 
-g = sns.lmplot(x = 'n', y = 'time', lowess = True,
+
+time_measures = pd.concat([t1, t2])
+
+g = sns.lmplot(x = 'n', y = 'time', hue='algorithm', lowess = True,
            x_jitter = 0.1, markers='.',
            data = time_measures)
 g.set(ylim = (0, max(time_measures['time'])))
 
-g.savefig("affine_2_seq.png")
+g.savefig("comparison.png")
