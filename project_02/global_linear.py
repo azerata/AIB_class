@@ -1,8 +1,5 @@
 import numpy as np
 import sys
-import pandas as pd
-from timeit import default_timer as timer
-import seaborn as sns
 
 from fasta import fasta
 from cmath import inf
@@ -132,7 +129,7 @@ if __name__ == "__main__":
 
     if run_op in ["a", "A"]:
         out = optimal_alignment(sequences[0], sequences[1], gap_cost)
-        print(out[0], "\n", out[1])
+        print(f'>seq1\n{out[0]}\n\n>seq2\n{out[1]}')
 
     if run_op in ["o", "O"]:
         out = build_alignment(sequences[0], sequences[1], gap_cost)
