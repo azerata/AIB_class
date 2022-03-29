@@ -77,17 +77,18 @@ def Newick_parser(file):
     for item in lst:
         if item == '(':
             stack.push(item)
-        elif item == ':':
+        elif item[0] == ':':
+            tmp = item.split(':')
+            stack.top().dist = float(tmp[1].strip(', '))
             continue
-        elif item[0] == ')':
+        elif item == ')':
             children = []
             while (x:= stack.pop()) != '(':
                 children.append(x)
             stack.push( Node(children ))
         else:
             tmp = item.split(':')
-            stack.push(Leaf(tmp[0],tmp[1]))
-        print(stack)
+            stack.push(Leaf(tmp[0],float(tmp[1].strip(', '))))
     return stack.pop()
 
 def read_newick(file):
@@ -112,3 +113,4 @@ o = read_newick(sys.argv[1])
 out = Newick_parser(sys.argv[1])
 print(o)
 print(out)
+print(out.children[0].dist)
