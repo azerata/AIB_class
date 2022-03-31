@@ -7,24 +7,6 @@ import sys
 class Link:
     element: str | int
     next: None | Link
-    
-def drop(lnk:Link, k:int)-> Link:
-    if k == 0:
-        return lnk
-    if k > 0:
-        return drop(lnk.next, k-1)
-
-def take(lnk:Link, k:int)->Link|None:
-    if k == 0:
-        return None
-    if k > 0:
-        return Link(lnk.element, take(lnk.next, k-1))
-
-def reverse(lnk:Link, acc = None)->Link:
-    if lnk is None: 
-        return acc
-    acc = Link(lnk.element, acc)
-    return reverse(lnk.next, acc )
 
 class Stack(object):
     def __init__(self, stack = None):
@@ -50,25 +32,22 @@ class Stack(object):
     def is_empty(self):
         return self.stack is None
 
-def tokenize(tree):
-    return re.findall(r'[()]|\w+', tree)
-   
 class Leaf(object):
     def __init__(self, name, distance = float):
         self.name = name
         self.dist = distance
     def __str__(self):
-        return self.name
+        return f'{self.name}:{self.dist}'
     __repr__=__str__
         
 
 class Node(object):
-    def __init__(self, children = (), distance = float):
+    def __init__(self, children = (), distance = 0.0):
         self.children = children
         self.dist = distance
     def __str__(self):
         children = [str(child) for child in self.children]
-        return '({})'.format(','.join(children))
+        return '({}):{}'.format(','.join(children),self.dist)
     __repr__=__str__
 
 def Newick_parser(file):
