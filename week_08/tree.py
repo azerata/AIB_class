@@ -47,8 +47,18 @@ class Node(object):
         self.dist = distance
     def __str__(self):
         children = [str(child) for child in self.children]
-        return '({}):{}'.format(','.join(children),self.dist)
+        if self.dist != 0.0:
+            return '({}):{}'.format(','.join(children),self.dist)
+        else: return '({})'.format(','.join(children))
     __repr__=__str__
+    def get_leaves(self, out = [])->list:
+        for child in self.children:
+            if type(child) == Leaf:
+                out.append(child.name)
+            elif type(child) == Node:
+                child.get_leaves(out)
+        return out
+
 
 def Newick_parser(file):
     stack = Stack()
@@ -88,8 +98,31 @@ def read_newick(file):
             out.append(item)
     return out
 
+@dataclass
+class Split:
+    node: Node
+    leaves: node.get_leaves()
+
+def rfdist(u:Node, v:Node):
+    out = []
+
+def get_splits(tree, out = []):
+    for child in tree.children:
+        if type(child) == Node:
+            out.append(child.get_leaves())
+            get_splits(child, out)
+    return out
+
+
 o = read_newick(sys.argv[1])
 out = Newick_parser(sys.argv[1])
-print(o)
-print(out)
-print(out.children[0].dist)
+
+o = [child for child in out.children]
+for child in o:
+    if type(child) == Node:
+        print(child.get_leaves())
+
+splits = get_splits(out)
+tmp = ['  '.join(split) for split in splits]
+#print('\n'.join(tmp))
+#print(out)
