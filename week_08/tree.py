@@ -109,8 +109,10 @@ def rfdist(u:Node, v:Node):
 def get_splits(tree, out = []):
     for child in tree.children:
         if type(child) == Node:
-            out.append(child.get_leaves())
             get_splits(child, out)
+            out.append(child)
+        else:
+            out.append(child)
     return out
 
 
@@ -122,7 +124,6 @@ for child in o:
     if type(child) == Node:
         print(child.get_leaves())
 
-splits = get_splits(out)
-tmp = ['  '.join(split) for split in splits]
-#print('\n'.join(tmp))
-#print(out)
+out = get_splits(out)
+
+print(out)

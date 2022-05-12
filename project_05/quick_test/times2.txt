@@ -1,0 +1,16 @@
+89_Adeno_E3_CR1.rnj.nwk	89_Adeno_E3_CR1.qt.nwk	18
+
+89_Adeno_E3_CR1.rnj.nwk	89_Adeno_E3_CR1.dnj.nwk	21
+
+89_Adeno_E3_CR1.qt.nwk	89_Adeno_E3_CR1.dnj.nwk	9
+
+304_A1_Propeptide.rnj.nwk	304_A1_Propeptide.qt.nwk	59
+
+304_A1_Propeptide.rnj.nwk	304_A1_Propeptide.dnj.nwk	56
+
+304_A1_Propeptide.qt.nwk	304_A1_Propeptide.dnj.nwk	8
+
+214_Arena_glycoprot.rnj.nwk	214_Arena_glycoprot.qt.nwk	38
+
+214_Arena_glycoprot.rnj.nwk	214_Arena_glycoprot.dnj.nwk	35
+
