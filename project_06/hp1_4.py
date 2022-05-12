@@ -1,6 +1,8 @@
 import typing
 import sys
 
+from numpy import argmax
+
 def read_string(path:str)->str:
     with open(path) as file:
         out = [line for line in file.readlines()]
@@ -145,8 +147,10 @@ def fold_mark_II(x, seq):
 if __name__=='__main__':
     seq = read_string(sys.argv[1])
     scores = match_oe(seq)
-    
+    if scores[0][0] < scores[1][0]:
+        opt = 0
+    else: opt = 1
 
-    fold = calculate_fold(scores[0][1], seq)
+    fold = calculate_fold(scores[opt][1], seq)
     print(''.join(fold))
     print(len(seq), len(fold))
