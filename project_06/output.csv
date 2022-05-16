@@ -1,0 +1,16 @@
+,seq #,length,sequence,Optimal score,Times,Fold,Discovered score,Opt,quart,
+0,01.00,18,hhppppphhppphppphp,-4,0.3867846,ennesseeeswwswnww,2,4,1,SAND
+1,02.00,18,hphphhhppphhhhpphh,-8,0.3637457,eeeeeeeswwwwwswnw,5,8,2,SAND
+2,03.00,18,phpphphhhphhphhhhh,-9,0.3606234,eeeeeeeeeeswwwwww,4,9,2.25,SAND
+3,04.00,20,hphpphhphpphphhpphph,-9,0.3581688,eeneseeeeswwwswnwww,5,9,2.25,SAND
+4,05.00,20,hhhpphphphpphphphpph,-10,0.3575986,eneseeeeeswwwwwwwww,3,10,2.5,SAND
+5,06.00,24,hhpphpphpphpphpphpphpphh,-9,0.358309,nesennesseeswsswnnwswnw,4,9,2.25,SAND
+6,07.00,25,pphpphhpppphhpppphhpppphh,-8,0.347796,eeeeennesseeeeswwwsswnnw,4,8,2,SAND
+7,08.00,36,ppphhpphhppppphhhhhhhpphhpppphhpphpp,-14,0.3586358,eeenesennnessseeeswwswnwsswnnwwwwww,8,14,3.5,SAND
+8,09.00,48,pphpphhpphhppppphhhhhhhhhhpppppphhpphhpphpphhhhh,-23,0.3570814,eenesenesennesseeeeeeeswwssswnnnwswnwsswnnwwwww,15,23,5.75,SAND
+9,10.00,50,hhphphphphhhhphppphppphpppphppphppphphhhhphphphphh,-21,0.3671811,eeeeeeeeeeeeeeeeeeeeeeeeswwwwwwwwwwwwwwwwwwwwwwww,12,21,5.25,SAND
+10,11.00,60,pphhhphhhhhhhhppphhhhhhhhhhphppphhhhhhhhhhhhpppphhhhhhphhphp,-36,0.3511089,eeeneseeeeeeeneseeeeeeeeeeeeeswwwwwwwwwwwwsswnnwwwwwswnwwww,20,36,9,SAND
+11,12.00,64,hhhhhhhhhhhhphphpphhpphhpphpphhpphhpphpphhpphhpphphphhhhhhhhhhhh,-42,0.3690164,eeeeeeeeeeeeeeenesenesennesseeeswwsswnnwswnwswnwwwwwwwwwwwwwwww,20,42,10.5,SAND
+12,13.00,85,hhhhpppphhhhhhhhhhhhpppppphhhhhhhhhhhhppphhhhhhhhhhhhppphhhhhhhhhhhhppphpphhpphhpphph,-53,0.3520467,eeennesseeeeeeeeeeennnessseeeeeeeeeeeneseeswwwwwwwwwswnwwwwwwwwwwwssswnnnwswnwswnwww,25,53,13.25,SAND
+13,14.00,100,pppppphphhppppphhhphhhhhphhpppphhpphhphhhhhphhhhhhhhhhphhphhhhhhhppppppppppphhhhhhhpphphhhpppppphphh,-48,0.3817853,eeeeeeeeennesseeeeeeeeeeennesseneseneseeeneseeeeeswwswnwwwwwwwwwssssswnnnnnwwwwwwwsswnnwssswnnnwwww,24,48,12,SAND
+14,15.00,100,ppphhpphhhhpphhhphhphhphhhhpppppppphhhhhhpphhhhhhppppppppphphhphhhhhhhhhhhpphhhphhphpphphhhpppppphhh,-50,0.3562499,eeeneseeeneseeeeeneseeeeennnnesssseeeeeneseeeeessssswnnnnwwwswnwwwwwwwwwswnwwwwwsswnnwwwwwssswnnnww,22,50,12.5,SAND
