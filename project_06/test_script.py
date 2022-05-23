@@ -1,9 +1,8 @@
-from re import sub
 import subprocess
 import sys
 import timeit
 import pandas as pd
-import seaborn as sns
+
 
 
 
@@ -42,9 +41,12 @@ ds = []
 for i in enumerate(df2["sequence"]):
     tmp = subprocess.run(["python3","hpview3k.py", f'{df2["sequence"][i[0]]}', f'{df2["Fold"][i[0]]}'],capture_output=True, text=True)
     score = tmp.stdout[-4::].strip(':')
-    ds.append(score.strip('\n'))
+    ds.append(int(score.strip('\n')))
 
 df3 = pd.DataFrame({"Discovered score":ds})
 final = pd.concat([df2, df3],axis=1)
 
-final.to_csv("output.csv", sep = ",")
+#final.to_csv("output.csv", sep = ",")
+
+for i in enumerate(final["sequence"]):
+    print(f'{final["seq #"][i[0]]} {final["sequence"][i[0]]} {final["Fold"][i[0]]} -'+ f'{final["Discovered score"][i[0]]}')
